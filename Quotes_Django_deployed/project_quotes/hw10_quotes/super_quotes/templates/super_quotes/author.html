@@ -1,0 +1,14 @@
+{%extends "super_quotes/base.html"%}
+{% load extract %}
+
+
+{% block content %}
+<div class="author-details">
+    <h3 class="author-title">{{author.fullname}}</h3>
+        <p><strong>Born:</strong> <span class="author-born-date">{{author.date_born}}</span> <span
+                class="author-born-location">{{author.born_location}}</span></p>
+        <p><strong>Description:</strong></p>
+        <div class="author-description">{{author.bio}}</div>
+</div>
+
+{% endblock %}

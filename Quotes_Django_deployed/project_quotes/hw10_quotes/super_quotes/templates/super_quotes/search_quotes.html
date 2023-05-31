@@ -1,0 +1,32 @@
+{%extends "super_quotes/base.html"%}
+{% load extract %}
+
+{% block content %}
+<div class="row">
+    <h4>Пошук за словом: {{query}}</h4>
+    <div class="col-md-8">
+        {% for quote in quotes %}
+        <div class="quote" itemscope="" itemtype="http://schema.org/CreativeWork">
+            <span class="text" itemprop="text">{{quote.quote}}</span>
+            <span>by <small class="author" itemprop="author">{{quote.author.fullname}}</small>
+            <a href="{% url 'super_quotes:author_about' quote.author.id %}">(about)</a>
+            </span>
+            <div class="tags">
+                Tags:
+                {% for tag in quote.tags.all %}
+                <a class="tag" href="{% url 'super_quotes:find_tag' tag.id %}">{{tag.name}}</a>
+                {% endfor %}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    <div class="col-md-4 themed-grid-col">
+        <h2>Top 10 Tags</h2>
+        {% for tag in top_tags %}
+        <div class="tags">
+            <a class="btn btn-info" href="{% url 'super_quotes:find_tag' tag.tags__name %}">{{tag.tags__name}}</a>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

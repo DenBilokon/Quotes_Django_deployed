@@ -1,0 +1,32 @@
+{%extends "super_quotes/base.html"%}
+
+{% block content %}
+<h3>Додати атвора</h3>
+
+{%if form.errors %}
+<span class="alert alert-danger" role="alert">{{form.non_field_errors}}</span>
+{% endif %}
+
+<form method="post">
+    {% csrf_token %}
+    <div class="row mb-3 col-md-6">
+        <label>Автор</label>
+        {{form.fullname}}
+    </div>
+    <div class="row mb-3 col-md-6">
+        <label class="form-label">Дата народження</label>
+        {{form.date_born}}
+    </div>
+    <div class="row mb-3 col-md-6">
+        <label>Місце народження</label>
+        {{form.born_location}}
+    </div>
+      <div class="row mb-3 col-md-6">
+        <label>Біографія</label>
+        {{form.bio}}
+    </div>
+
+
+    <button type="submit" class="btn btn-primary">Додати автора</button>
+</form>
+{% endblock %}

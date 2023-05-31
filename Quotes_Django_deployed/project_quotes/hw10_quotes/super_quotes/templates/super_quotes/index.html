@@ -1,0 +1,65 @@
+{%extends "super_quotes/base.html"%}
+{% load extract %}
+
+
+{% block content %}
+<div class="row">
+    <div class="col-md-8 themed-grid-col">
+        {% for quote in quotes %}
+        <div class="quote" itemscope="" itemtype="http://schema.org/CreativeWork">
+            <span class="text" itemprop="text">{{quote.quote}}</span>
+            <span>by <small class="author" itemprop="author">{{quote.author.fullname}}</small>
+        <a href="{% url 'super_quotes:author_about' quote.author.id %}">(about)</a>
+        </span>
+            <div class="tags">
+                Tags:
+                {% for tag in quote.tags.all %}
+                <a class="tag" href="{% url 'super_quotes:find_tag' tag.id %}">{{tag.name}}</a>
+                {% endfor %}
+            </div>
+        </div>
+        {% endfor %}
+        <nav>
+            <ul class="pagination">
+                <li class="previous">
+                    {% if quotes.has_previous %}
+                    <a href="/1" class="btn btn-light">&laquo; Перша</a>
+                    <a href="/{{ quotes.previous_page_number }}" class="btn btn-light">Попередня</a>
+                    {% endif %}
+                    <span class="current">Сторінка {{ quotes.number }} з {{ quotes.paginator.num_pages }}</span>
+                    {% if quotes.has_next %}
+                    <a href="/{{ quotes.next_page_number }}" class="btn btn-light">Наступна</a>
+                    <a href="/{{ quotes.paginator.num_pages }}" class="btn btn-light">Остання &raquo;</a>
+                    {% endif %}
+            </ul>
+        </nav>
+
+    </div>
+    <div class="col-md-2 themed-grid-col">
+        <h4>Top 10 Tags</h4>
+        {% for tag in top_tags %}
+        <div class="tags">
+            <p class="btn btn-info" href="{% url 'super_quotes:find_tag' tag.tags__name %}">{{tag.tags__name}}</p>
+        </div>
+        {% endfor %}
+    </div>
+    <div class="col-md-2">
+        <h4>Чудова статистика</h4>
+        <p class="btn btn-warning">На дату: {{ war_info.date }}</p>
+        <p class="btn btn-info">Танки: {{ war_info.tanks }}</p>
+        <p class="btn btn-info">ББМ: {{ war_info.bbm }}</p>
+        <p class="btn btn-info">Гармати: {{ war_info.artillery }}</p>
+        <p class="btn btn-info">РСЗВ: {{ war_info.rszw }}</p>
+        <p class="btn btn-info">Засоби ППО: {{ war_info.ppo }}</p>
+        <p class="btn btn-info">Літаки: {{ war_info.planes }}</p>
+        <p class="btn btn-info">Гелікоптери: {{ war_info.helicopters }}</p>
+        <p class="btn btn-info">БПЛА: {{ war_info.drones }}</p>
+        <p class="btn btn-info">Крилаті ракети: {{ war_info.rockets }}</p>
+        <p class="btn btn-info">Кораблі (катери): {{ war_info.ships }}</p>
+        <p class="btn btn-info">Автомобілі: {{ war_info.vehicles }}</p>
+        <p class="btn btn-info">Спец. техніка: {{ war_info.auto }}</p>
+        <p class="btn btn-info">Орки: {{ war_info.orks }}</p>
+    </div>
+
+</div>
+{% endblock %}

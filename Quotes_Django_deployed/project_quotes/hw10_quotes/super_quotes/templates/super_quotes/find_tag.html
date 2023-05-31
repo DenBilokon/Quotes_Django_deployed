@@ -1,0 +1,46 @@
+{%extends "super_quotes/base.html"%}
+{% load extract %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-8">
+        {% for quote in quotes %}
+        <div class="quote" itemscope="" itemtype="http://schema.org/CreativeWork">
+            <span class="text" itemprop="text">{{quote.quote}}</span>
+            <span>by <small class="author" itemprop="author">{{quote.author.fullname}}</small>
+            <a href="{% url 'super_quotes:author_about' quote.author.id %}">(about)</a>
+            </span>
+            <div class="tags">
+                Tags:
+                {% for tag in quote.tags.all %}
+                <a class="tag" href="{% url 'super_quotes:find_tag' tag.id %}">{{tag.name}}</a>
+                {% endfor %}
+            </div>
+        </div>
+        {% endfor %}
+        <nav>
+            <ul class="pagination">
+                <li class="previous">
+                    {% if quotes.has_previous %}
+                    <a href="?page=1" class="btn btn-light">&laquo; Перша</a>
+                    <a href="?page={{ quotes.previous_page_number }}" class="btn btn-light">Попередня</a>
+                    {% endif %}
+                    <span class="current">Сторінка {{ quotes.number }} з {{ quotes.paginator.num_pages }}</span>
+                    {% if quotes.has_next %}
+                    <a href="?page={{ quotes.next_page_number }}" class="btn btn-light">Наступна</a>
+                    <a href="?page={{ quotes.paginator.num_pages }}" class="btn btn-light">Остання &raquo;</a>
+                    {% endif %}
+                </li>
+            </ul>
+        </nav>
+    </div>
+    <div class="col-md-4 themed-grid-col">
+        <h2>Top 10 Tags</h2>
+        {% for tag in top_tags %}
+        <div class="tags">
+            <a class="btn btn-info" href="{% url 'super_quotes:find_tag' tag.tags__name %}">{{tag.tags__name}}</a>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
