@@ -1,0 +1,33 @@
+# fly.toml app configuration file generated for quotes-greenjuiced on 2023-06-01T18:04:42+03:00
+#
+# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
+#
+
+app = "quotes-greenjuiced"
+primary_region = "waw"
+
+
+[env]
+  PORT = "8000"
+  SECRET_KEY="django-insecure-lefxr%(&fd-_557ii8d=ncchcfs6d5d@yxf0-x##59+%tn!_*8"
+  DJANGO_DB_NAME="vtoqibcv"
+  DJANGO_DB_USER="vtoqibcv"
+  DJANGO_DB_PASSWORD="LkcyZUaa6X0RJfie-M1KxGMI7PVbdiar"
+  DJANGO_DB_HOST="snuffleupagus.db.elephantsql.com"
+  DJANGO_DB_PORT=5432
+  EMAIL_HOST="smtp.meta.ua"
+  EMAIL_PORT=465
+  EMAIL_HOST_USER="greenjuiced_test@meta.ua"
+  EMAIL_HOST_PASSWORD="Ahfthvty2301"
+  OPENAI_KEY="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"
+
+[http_service]
+  internal_port = 8000
+  force_https = true
+  auto_stop_machines = true
+  auto_start_machines = true
+  min_machines_running = 0
+
+[[statics]]
+  guest_path = "/static"
+  url_prefix = "/static/"

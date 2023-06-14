@@ -1,0 +1,48 @@
+{% extends "super_quotes/base.html" %}
+{% load extract %}
+
+{% block content %}
+<div class="author-details">
+  <h3 class="author-title">{{ author.fullname }}</h3>
+  <p><strong>Born:</strong> <span class="author-born-date">{{ author.date_born }}</span>
+    <span class="author-born-location">{{ author.born_location }}</span></p>
+  <p><strong>Description:</strong></p>
+  <div class="author-description">{{ author.bio }}</div>
+</div>
+
+<div class="chat-form">
+  <form id="question-form" action="{% url 'super_quotes:question_to_ai' _id=author.id %}" method="post">
+    {% csrf_token %}
+    <br>
+    <br>
+    <div class="mb-2">
+      <label for="question" style="font-weight: bold;">Уявімо, що Ви хочете поспілкуватись з даним автором. У вас є чудова нагода запитати цього автора про все, що цікавить. А допоможе в цьому штучний інтелект</label>
+    </div>
+    <div class="d-flex">
+      <input type="text" id="question" name="question" class="form-control me-2">
+      <input type="submit" class="btn btn-dark" value="Запитати">
+    </div>
+  </form>
+  <div id="response-container"></div>
+</div>
+
+<script>
+  $(document).ready(function() {
+    $('#question-form').submit(function(event) {
+      event.preventDefault();
+      var form = $(this);
+      var url = form.attr('action');
+      var formData = form.serialize();
+
+      $.ajax({
+        type: 'POST',
+        url: url,
+        data: formData,
+        success: function(response) {
+          $('#response-container').html(response);
+        }
+      });
+    });
+  });
+</script>
+{% endblock %}

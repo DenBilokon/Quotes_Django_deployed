@@ -1,0 +1,26 @@
+{%extends "super_quotes/base.html"%}
+
+{% block content %}
+<h3>Додати цитату</h3>
+
+{%if form.errors %}
+<span class="alert alert-danger" role="alert">{{form.non_field_errors}}</span>
+{% endif %}
+
+<form method="post">
+    {% csrf_token %}
+    <div class="row mb-3 col-md-6">
+        <label>Цитата</label>
+        {{form.quote}}
+    </div>
+    <div class="row mb-3 col-md-6">
+        <label class="form-label">Теги (обери один або декілька)</label>
+        {{form.tags}}
+    </div>
+    <div class="row mb-3 col-md-6">
+        <label>Автор</label>
+        {{form.author}}
+    </div>
+    <button type="submit" class="btn btn-primary">Додати цитату</button>
+</form>
+{% endblock %}

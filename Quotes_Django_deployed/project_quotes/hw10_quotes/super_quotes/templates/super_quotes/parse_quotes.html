@@ -1,0 +1,24 @@
+{% extends "super_quotes/base.html" %}
+
+{% block content %}
+<div class="row">
+    <h4>Завершено парсинг сайту {{ base_url }}</h4>
+    <div class="col-md-8">
+        {% for author in final_parse.author_spider %}
+        {% if author_created %}
+
+        <div class="quote" itemscope="" itemtype="http://schema.org/CreativeWork">
+            <span class="text" itemprop="text">Новий автор "{{ author }}" був доданий до бази даних!</span>
+            {% endif %}
+            {% endfor %}
+        </div>
+        {% for quote in final_parse.quote_spider %}
+        {% if quote_created %}
+        <div class="quote" itemscope="" itemtype="http://schema.org/CreativeWork">
+            <span class="text" itemprop="text">Нова цитата "{{ quote }}" була додана до бази даних!</span>
+            {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}
